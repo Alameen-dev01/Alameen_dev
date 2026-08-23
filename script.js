@@ -8,7 +8,7 @@ function signup(event) {
 
     alert("Account created!");
 
-    location.href = "Login.html";
+    location.href = "login.html";
 }
 
 function login(event) {
@@ -19,7 +19,7 @@ function login(event) {
 
     if (email === savedEmail) {
         alert("Login successful!");
-        location.href = "Third.html";
+        location.href = "main.html";
     } else {
         alert("Invalid email");
     }
