@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <style>
+img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto 5px;
+}
+
+p {
+    margin: 0;
+}
+      legend{
+          text-align:center;
+          }
+         .container {
+    width: 300px;
+    height: 600px;
+    background: linear-gradient(22deg, #ff00ff, #ffffff, #ff00ff);
+    border-radius: 21px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.container img {
+  border-radius:50%;
+  display: block;
+    width: 100px;
+    height: 100px;
+    margin: 20px auto 5px;
+}
+
+.container p {
+    margin: 0 0 10px;
+}
+
+.container input {
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+}
+              body{
+                  background: linear-gradient(90deg, #ff00cc, #333399);
+              }
+    
+  </style>
+  </head>
+  <body>
+  <div class="container">
+  <img src="file.png">
+    <p>USER_ID 369029</p>
+<form onsubmit="signup(event)">
+
+<input type="text" id="signupName" placeholder="Full name" required>
+
+<br>
+
+<input type="email" id="signupEmail" placeholder="Email" required>
+
+<br>
+
+<input type="password" id="signupPassword" placeholder="Password" required>
+
+<br>
+
+<input type="text" value="Nigeria" disabled>
+<br>
+
+<button type="submit">Create Account</button>
+
+</form>
+
+<script src="script.js"></script>  
+  </div>
+  </body>
+</html>
