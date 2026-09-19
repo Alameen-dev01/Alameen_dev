@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
   <style>
   img {
     width: 100px;
@@ -20,10 +18,11 @@ p {
   .container {
     width: 300px;
     height: 600px;
-    background: linear-gradient(22deg, #ff00ff, #ffffff, #ff00ff);
+    background: linear-gradient(159deg, #000000, #333399);
     border-radius: 21px;
     text-align: center;
     margin: 20px auto;
+	  border:5px solid white;
 }
 
 .container img {
@@ -43,8 +42,8 @@ p {
     width: 200px;
     margin: 5px auto;
 }
-              body{
-              background: linear-gradient(90deg, #ff00cc, #333399);
+              input{
+    color: white;
                   }
 
 </style>
@@ -71,9 +70,128 @@ p {
       </form>
 
       <script src="script.js"></script>
-      </div>
-      </body>
-      </html>
+	  
+      </div></div>
+<script type="module">
+import { auth, db } from "./Firebase.js";
+
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+import {
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+const signupForm = document.getElementById("signupForm");
+
+
+signupForm.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const name = document.getElementById("name").value;
+
+  const email = document.getElementById("email").value;
+
+  const password = document.getElementById("password").value;
+
+
+  try {
+
+    // Create account
+    const userCredential =
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    // Get user
+    const user = userCredential.user;
+
+
+    // Send verification email
+    await sendEmailVerification(user);
+
+
+    // Save user information in Firestore
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        name: name,
+        email: email
+      }
+    );
+
+
+    // Success message
+    alert("Account created! Check your email and verify it.");
+
+
+    // Go to login page
+    window.location.href = "login.html";
+
+
+  } catch (error) {
+
+    alert("Error: " + error.message);
+
+  }
+
+});
+
+<script  type="module">
+
+import { auth } from "./Firebase.js";
+
+import {
+    signInWithEmailAndPassword,
+    reload
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+
+const loginForm = document.getElementById("loginForm");
+
+
+loginForm.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    
+        try {
+
+    await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+    );
+
+    const user = auth.currentUser;
+
+    await reload(user);
+
+    if (user.emailVerified) {
+
+        alert("Login successful!");
+
+        window.location.href = "main.html";
+
+    } else {
+
+        alert("Please verify your email first!");
+
+    }
+
+				}
+
+</script>
   </div>
   </body>
 </html>

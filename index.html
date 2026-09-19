@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
   <style>
 img {
     width: 100px;
@@ -17,63 +15,140 @@ p {
       legend{
           text-align:center;
           }
-         .container {
+         
+.container {
     width: 300px;
     height: 600px;
-    background: linear-gradient(22deg, #ff00ff, #ffffff, #ff00ff);
+    background: linear-gradient(159deg, #000000, #333399);
     border-radius: 21px;
     text-align: center;
     margin: 20px auto;
+    border: 5px solid white;
 }
 
 .container img {
-  border-radius:50%;
-  display: block;
+    border-radius: 50%;
+    display: block;
     width: 100px;
     height: 100px;
-    margin: 20px auto 5px;
-}
+	  }
+
 
 .container p {
     margin: 0 0 10px;
+    
 }
 
 .container input {
     display: block;
     width: 200px;
     margin: 10px auto;
-}
-              body{
-                  background: linear-gradient(90deg, #ff00cc, #333399);
+};		      
+		        
+   body{
+     background-color:#000000;
               }
-    
+	  input{
+		  color:white;
+	  }
+    p{
+		 color: white;
+	 }
+	 
   </style>
   </head>
   <body>
   <div class="container">
   <img src="file.png">
     <p>USER_ID 369029</p>
-<form onsubmit="signup(event)">
 
-<input type="text" id="signupName" placeholder="Full name" required>
+<form>
 
+  <input type="email" id="email" placeholder="Email" required>
 <br>
+  <input type="password" id="password" placeholder="Password" required>
+	<br>
+	<label for="country"></label>
 
-<input type="email" id="signupEmail" placeholder="Email" required>
-
-<br>
-
-<input type="password" id="signupPassword" placeholder="Password" required>
-
-<br>
-
-<input type="text" value="Nigeria" disabled>
-<br>
-
-<button type="submit">Create Account</button>
-
+<select id="country" name="country" required>
+    <option value="">Select Country</option>
+    <option value="Nigeria">Nigeria</option>
+    <option value="Ghana">Ghana</option>
+    <option value="United States">United States</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="Germany">Germany</option>
+    <option value="Canada">Canada</option>
+    <option value="South Africa">South Africa</option>
+    <option value="France">France</option>
+    <option value="Italy">Italy</option>
+    <option value="Spain">Spain</option>
+</select>
+	<br><br>
+  <button type="submit">Create Account</button>
+	<br>
+<a href="login.html">
+   Already have an account 
+</a>
 </form>
+<script type="module">
 
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+  import {
+    getAuth,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+  // Your Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBCEGR-H-5GM8d8qaE6zTvY-HdiTktpJs0",
+    authDomain: "mylogin-a1a7c.firebaseapp.com",
+    projectId: "mylogin-a1a7c",
+    storageBucket: "mylogin-a1a7c.firebasestorage.app",
+    messagingSenderId: "354827995849",
+    appId: "1:354827995849:web:f8275057d8fa8a621e1b18",
+    measurementId: "G-0T7XFS36QK"
+  };
+
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+
+  // Initialize Authentication
+  const auth = getAuth(app);
+
+
+  // Get your form
+  const form = document.querySelector("form");
+
+
+  // Create account when button is clicked
+  form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+
+    try {
+    await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+    );
+
+    window.location.href = "login.html";
+
+} catch (error) {
+    alert(error.message);
+	 }
+
+
+												
+
+</script>
 <script src="script.js"></script>  
   </div>
   </body>

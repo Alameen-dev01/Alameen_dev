@@ -19,7 +19,7 @@ function login(event) {
 
     if (email === savedEmail) {
         alert("Login successful!");
-        location.href = "main.html";
+        location.href = "third.html";
     } else {
         alert("Invalid email");
     }
