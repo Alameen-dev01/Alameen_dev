@@ -135,16 +135,14 @@ p {
 
     try {
     await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-    );
+    auth,
+    email,
+    password
+);
 
-    window.location.href = "login.html";
+alert("Account created successfully!");
 
-} catch (error) {
-    alert(error.message);
-	 }
+window.location.href = "login.html";
 
 
 												
