@@ -94,36 +94,25 @@ loginForm.addEventListener("submit", async (e) => {
         return;
     }
 
-    try {
+try {
 
-        // Login user
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
+    await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+    );
 
-        // Login successful
-        alert("Login successful!");
+    alert("LOGIN SUCCESSFUL");
 
-        // Go to main page
-        window.location.assign("./main.html");
+    window.location.href =
+        "https://alameen-dev.vercel.app/main.html";
 
-    } catch (error) {
+} catch (error) {
 
-        console.log(error);
+    console.log(error);
 
-        if (error.code === "auth/invalid-credential") {
-            alert("Incorrect email or password.");
-
-        } else if (error.code === "auth/invalid-email") {
-            alert("Invalid email address.");
-
-        } else {
-            alert("Login error: " + error.message);
-        }
-    }
-
+    alert("LOGIN ERROR: " + error.code + "\n" + error.message);
+						   }
 });
 
 </script>
