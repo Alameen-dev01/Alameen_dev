@@ -77,8 +77,7 @@ import { auth } from "./Firebase.js";
 
 import {
     signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const loginForm = document.getElementById("loginForm");
 
@@ -89,32 +88,20 @@ loginForm.addEventListener("submit", async (e) => {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    if (!email || !password) {
-        alert("Please enter your email and password.");
-        return;
-    }
+    try {
 
-try {
+        await signInWithEmailAndPassword(auth, email, password);
 
-    await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-    );
+        alert("Login successful!");
 
-    alert("LOGIN SUCCESSFUL");
+        window.location.href = "./main.html";
 
-    window.location.href =
-        "https://alameen-dev.vercel.app/main.html";
+    } catch (error) {
 
-} catch (error) {
+        alert("Login failed: " + error.message);
 
-    console.log(error);
-
-    alert("LOGIN ERROR: " + error.code + "\n" + error.message);
-						   }
-});
-
-</script>
+        console.log(error);
+	});
+   </script>
   </body>
 </html>
