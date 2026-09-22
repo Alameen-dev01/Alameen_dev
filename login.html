@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-  <head>	  
+<head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <style>
-  img {
+
+<style>
+img {
     width: 100px; 
     height: 100px;
     display: block;
@@ -13,21 +14,23 @@
 p {
     margin: 0 0 10px;
 }
-      legend{
-          text-align:center;
-          }
-  .container {
+
+legend {
+    text-align: center;
+}
+
+.container {
     width: 300px;
     height: 600px;
     background: linear-gradient(159deg, #000000, #333399);
     border-radius: 21px;
     text-align: center;
     margin: 20px auto;
-	  border:5px solid white;
+    border: 5px solid white;
 }
 
 .container img {
-  border-radius:50%;
+    border-radius: 50%;
     display: block;
     width: 100px;
     height: 100px;
@@ -43,34 +46,48 @@ p {
     width: 200px;
     margin: 5px auto;
 }
-              input{
+
+input {
     color: white;
-                  }
-
+}
 </style>
-  </head>
-  <body>
-  <div class="container ">
-<img src="file.png">
-      <br><br>
-      <form onsubmit="login(event)">
+</head>
 
-      <input type="email" id="loginEmail"
-      placeholder="Email" required>
+<body>
 
-      <br>
+<div class="container">
 
-      <input type="password"
-      id="loginPassword"
-      placeholder="Password" required>
+    <img src="file.png">
 
-      <br>
+    <br><br>
 
-      <button type="submit">login</button>
-      
+    <form id="loginForm">
 
-	  
-      </div></div>
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+            required
+        >
+
+        <br>
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            required
+        >
+
+        <br>
+
+        <button type="submit">login</button>
+
+    </form>
+
+</div>
+
+
 <script type="module">
 
 import { auth } from "./Firebase.js";
@@ -79,29 +96,62 @@ import {
     signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
+
 const loginForm = document.getElementById("loginForm");
 
-loginForm.addEventListener("submit", async (e) => {
 
-    e.preventDefault();
+loginForm.addEventListener("submit", async function(event) {
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
+    event.preventDefault();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+    }
+
 
     try {
 
-        await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
         alert("Login successful!");
 
-        window.location.href = "./main.html";
+        window.location.href = "main.html";
+
 
     } catch (error) {
 
-        alert("Login failed: " + error.message);
-
         console.log(error);
-	});
-   </script>
-  </body>
+
+        if (error.code === "auth/invalid-credential") {
+
+            alert("Incorrect email or password.");
+
+        } else if (error.code === "auth/invalid-email") {
+
+            alert("Invalid email address.");
+
+        } else {
+
+            alert("Login failed: " + error.message);
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
 </html>
