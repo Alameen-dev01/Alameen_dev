@@ -74,120 +74,60 @@ p {
 	  
       </div></div>
 <script type="module">
-import { auth, db } from "./Firebase.js";
-
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
-import {
-  doc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
-
-const signupForm = document.getElementById("signupForm");
-
-
-signupForm.addEventListener("submit", async (e) => {
-
-  e.preventDefault();
-
-  const name = document.getElementById("name").value;
-
-  const email = document.getElementById("email").value;
-
-  const password = document.getElementById("password").value;
-
-
-  try {
-
-    // Create account
-    const userCredential =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    // Get user
-    const user = userCredential.user;
-
-
-    // Send verification email
-    await sendEmailVerification(user);
-
-
-    // Save user information in Firestore
-    await setDoc(
-      doc(db, "users", user.uid),
-      {
-        name: name,
-        email: email
-      }
-    );
-
-
-    // Success message
-    alert("Account created! Check your email and verify it.");
-
-
-    // Go to login page
-    window.location.href = "login.html";
-
-
-  } catch (error) {
-
-    alert("Error: " + error.message);
-
-  }
-
-});
-
-<script  type="module">
 
 import { auth } from "./Firebase.js";
 
 import {
-    signInWithEmailAndPassword,
-    reload
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 
 const loginForm = document.getElementById("loginForm");
-
 
 loginForm.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    
-        try {
+    if (!email || !password) {
+        alert("Please enter your email and password.");
+        return;
+    }
 
-    await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-    );
+    try {
 
-    const user = auth.currentUser;
+        // Login user
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
 
-    await reload(user);
-
-    if (user.emailVerified) {
-
+        // Login successful
         alert("Login successful!");
 
+        // Go to main page
         window.location.href = "main.html";
 
+    } catch (error) {
+
+        console.log(error);
+
+        if (error.code === "auth/invalid-credential") {
+            alert("Incorrect email or password.");
+
+        } else if (error.code === "auth/invalid-email") {
+            alert("Invalid email address.");
+
+        } else {
+            alert("Login error: " + error.message);
+        }
     }
-				}
+
+});
 
 </script>
-  </div>
   </body>
 </html>
